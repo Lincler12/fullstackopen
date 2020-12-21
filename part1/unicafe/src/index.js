@@ -25,7 +25,9 @@ const App = () => {
 
   const handleBad = () => setBad(bad + 1);
 
+  const sum = good + neutral + bad;
   return (
+
     <div>
       <h1>Give feedback</h1>
       <Button name="good" onClickHandler={handleGood}/>
@@ -35,6 +37,9 @@ const App = () => {
       <Display name = "good" clickedNo = {good}/>
       <Display name = "neutral" clickedNo = {neutral}/>
       <Display name = "bad" clickedNo = {bad}/>
+      <Display name = "all" clickedNo = {sum}/>
+      <Display name = "average" clickedNo = {(good-bad)/sum}/>
+      <Display name = "positive" clickedNo = {100 * good / sum}/>
 
     </div>
   )
