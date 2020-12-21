@@ -26,11 +26,20 @@ const App = (props) => {
     newArray[selected]+=1;
     setVotes(newArray);
   }
+  let maxIndex = 0;
+  let maxValue = 0;
+  for(let i = 0; i < votes.length; i++){
+    if(votes[i] > maxValue){
+      maxValue = votes[i]
+      maxIndex = i;
+    }
+  }
   return (
     <div>
       <Display quote = {anecdotes[selected]}/>
       <Vote arrayNumber = {selected} votes = {votes} upVote = {upVote}/>
       <Button name = "random" clickHandler = {random}/>
+      <p>{anecdotes[maxIndex]}</p>
     </div>
   )
 }
