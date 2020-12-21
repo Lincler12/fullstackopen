@@ -7,25 +7,28 @@ const Button = ({ name, onClickHandler }) => {
 
 const Display = ({ name, clickedNo }) => {
   return (
-    <p>
-      {name} {clickedNo}
-    </p>
+    <tr>
+      <td>{name}</td>
+      <td>{clickedNo}</td>
+    </tr>
   );
 };
 
 const Statistics = (props) => {
   const { good, neutral, bad, sum } = props.data;
   const avg = (good - bad) / sum;
-  const positivePercentage = (100 * good) / sum;
+  const positivePercentage = `${(100 * good) / sum}%`;
   return (
-    <>
-      <Display name="good" clickedNo={good} />
-      <Display name="neutral" clickedNo={neutral} />
-      <Display name="bad" clickedNo={bad} />
-      <Display name="all" clickedNo={sum} />
-      <Display name="average" clickedNo={avg} />
-      <Display name="positive" clickedNo={positivePercentage} />
-    </>
+    <table>
+      <tbody>
+        <Display name="good" clickedNo={good} />
+        <Display name="neutral" clickedNo={neutral} />
+        <Display name="bad" clickedNo={bad} />
+        <Display name="all" clickedNo={sum} />
+        <Display name="average" clickedNo={avg} />
+        <Display name="positive" clickedNo={positivePercentage} />
+      </tbody>
+    </table>
   );
 };
 const App = () => {
