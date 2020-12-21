@@ -6,16 +6,30 @@ const Button = ({name, clickHandler}) => <button onClick = {clickHandler}>{name}
 
 const Display = ({quote}) => <p>{quote}</p>
 
+const Vote = ({arrayNumber, votes, upVote}) => {
+  return (
+    <>
+      <p>Has {votes[arrayNumber]} votes</p>
+      <button onClick={upVote}>vote</button>
+    </>
+  )
+}
 const App = (props) => {
   const [selected, setSelected] = useState(0)
-
+  const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0));
   const random = () => {
    setSelected( Math.floor(Math.random() * anecdotes.length));
    console.log(selected);
   }
+  const upVote = () => {
+    const newArray = [...votes];
+    newArray[selected]+=1;
+    setVotes(newArray);
+  }
   return (
     <div>
       <Display quote = {anecdotes[selected]}/>
+      <Vote arrayNumber = {selected} votes = {votes} upVote = {upVote}/>
       <Button name = "random" clickHandler = {random}/>
     </div>
   )
