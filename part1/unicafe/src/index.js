@@ -13,7 +13,8 @@ const Display = ({ name, clickedNo }) => {
   );
 };
 
-const Statistics = ({ good, neutral, bad, sum }) => {
+const Statistics = (props) => {
+  const { good, neutral, bad, sum } = props.data;
   const avg = (good - bad) / sum;
   const positivePercentage = (100 * good) / sum;
   return (
