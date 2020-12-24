@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PersonForm from "./components/PersonForm";
 import Filter from "./components/Filter";
 import Display from "./components/Display";
-import axios from 'axios';
+import services from "./services";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -12,14 +12,16 @@ const App = () => {
   const [showAll, setShowAll] = useState(true);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons")
-    .then(response => {
-        console.log(response);
-        setPersons(response.data);
-    })
+    // axios.get("http://localhost:3001/persons")
+    // .then(response => {
+    //     console.log(response);
+    //     setPersons(response.data);
+    // })
 
-
-  },[]);
+    services.getAll().then((data) => {
+      setPersons(data);
+    });
+  }, []);
 
   const onChangeNameHandler = (event) => setNewName(event.target.value);
 
@@ -39,13 +41,18 @@ const App = () => {
       alert(`${newName} is already added to phonebook`);
       return;
     }
-    setPersons(persons.concat({ name: newName, number: newNumber }));
-    setNewName("");
-    setNewNumber("");
+    const newPerson = { name: newName, number: newNumber };
+    services.create(newPerson).then((data) => {
+      setPersons(persons.concat(data));
+      setNewName("");
+      setNewNumber("");
+    });
   };
+
   const displayArrayElements = showAll
     ? persons
     : persons.filter((person) => person.name.indexOf(searchValue) > -1);
+
   return (
     <>
       <h2>Phonebook</h2>
