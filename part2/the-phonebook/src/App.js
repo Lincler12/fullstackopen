@@ -3,6 +3,7 @@ import PersonForm from "./components/PersonForm";
 import Filter from "./components/Filter";
 import Display from "./components/Display";
 import services from "./services";
+import axios from "axios";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -49,6 +50,13 @@ const App = () => {
     });
   };
 
+  const onDeleteClickButton = (personParam) => {
+    if (window.confirm(`Do you really want to delete ${personParam.name}`)) {
+        services.remove(personParam.id).then(() => {
+        setPersons(persons.filter(person => person.id !== personParam.id));
+      });
+    }
+  };
   const displayArrayElements = showAll
     ? persons
     : persons.filter((person) => person.name.indexOf(searchValue) > -1);
@@ -66,7 +74,7 @@ const App = () => {
         changeNumberValue={onChangeNumberHandler}
       />
       <h2>Numbers</h2>
-      <Display persons={displayArrayElements} />
+      <Display persons={displayArrayElements} deleteHandler = {onDeleteClickButton}/>
     </>
   );
 };
