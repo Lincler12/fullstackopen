@@ -38,8 +38,16 @@ const App = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    if (persons.filter((person) => person.name === newName).length > 0) {
-      alert(`${newName} is already added to phonebook`);
+    if (persons.filter((person) => person.name === newName).length > 0 ) {
+      const [person, ...everythingElse] = persons.filter((person) => person.name === newName);
+      if(newNumber !== ''){
+        if(window.confirm(`${person.name} is already added to phonebook, replace the old number with a new one?`)){
+          services.update(person.id, {...person, number: newNumber}).then(data => {
+            setPersons([...persons.filter(person => person.id !== data.id), data]);
+          })
+        }
+      };
+      // alert(`${newName} is already added to phonebook`);
       return;
     }
     const newPerson = { name: newName, number: newNumber };
